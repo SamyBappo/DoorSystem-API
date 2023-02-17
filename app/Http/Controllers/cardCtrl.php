@@ -4,18 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\rfidCard;
 use Illuminate\Http\Request;
+use PhpMqtt\Client\Facades\MQTT;
+use Spatie\FlareClient\Api;
 
 class cardCtrl extends Controller
 {
-    public function getall(){
-        return rfidCard::all();
+    public function mqttSub(){
+        $mqtt = MQTT::connection();
+        $mqtt->subscribe('/door/cardUID', function (string $topic, string $message) {
+            }, 1);
+        $mqtt->loop(true);
     }
 
+    public function getall(){
+        return route('api/card/check',['uid'=>'po'], true);
+        $mqtt = MQTT::connection();
+        $mqtt->subscribe('/door/cardUID', function (string $topic, string $message) {
+                return route('api/card/check',['uid'=>$message]);
+            }, 1);
+        //$mqtt->loop(true);
+        //return rfidCard::all();
+    }
+
+
     public function check(Request $req){
+
         $uid = $req->input('uid');
         $cards = rfidCard::all();
         foreach($cards as $card){
-            if ($card->uid == $uid){return $card->accessLvl;}
+            if ($card->uid == $uid)
+            {
+                MQTT::publish('/door/acsLvl', $card->accessLvl);
+                return $card->accessLvl;
+            }
         }
         return 0;
     }

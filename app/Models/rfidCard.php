@@ -11,5 +11,14 @@ class rfidCard extends Model
 
     protected $table = "rfid_cards";
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'uid',
+        'accessLvl',
+    ];
 
 }
