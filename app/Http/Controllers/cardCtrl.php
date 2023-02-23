@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\rfidCard;
 use Illuminate\Http\Request;
 use PhpMqtt\Client\Facades\MQTT;
-use Spatie\FlareClient\Api;
 
 class cardCtrl extends Controller
 {
@@ -25,7 +24,6 @@ class cardCtrl extends Controller
         //$mqtt->loop(true);
         //return rfidCard::all();
     }
-
 
     public function check(Request $req){
 
