@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class userCtrl extends Controller
 {
