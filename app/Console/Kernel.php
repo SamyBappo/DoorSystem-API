@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Http\Controllers\cardCtrl;
+use Illuminate\Http\Request;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use PhpMqtt\Client\Facades\MQTT;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,6 +19,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+            $mqtt = MQTT::connection();
+            $mqtt->loop(true);
+        })->everyMinute();
     }
 
     /**
