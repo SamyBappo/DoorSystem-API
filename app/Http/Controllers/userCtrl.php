@@ -40,5 +40,6 @@ class userCtrl extends Controller
         $user->email=$req->email;
         $user->password=Hash::make($req->password);
         $user->save();
+        return true;
     }
 }

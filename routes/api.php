@@ -22,6 +22,6 @@ Route::post('card/check', [cardCtrl::class, 'check']);
 Route::post('card/add', [cardCtrl::class, 'add']);
 
 //user
-Route::post('user/auth', [userCtrl::class, 'authentication']);
+Route::post('user/auth', [userCtrl::class, 'authenticate']);
 Route::post('user/add', [userCtrl::class, 'add']);
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) { return $request->user();});
