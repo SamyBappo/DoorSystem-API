@@ -33,6 +33,8 @@ class cardCtrl extends Controller
             if ($card->uid == $uid)
             {
                 MQTT::publish('/door/acsLvl', $card->accessLvl);
+                $log = new logCtrl();
+                $log->add($uid);
                 return $card->accessLvl;
             }
         }
