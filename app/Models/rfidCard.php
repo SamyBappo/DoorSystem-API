@@ -9,7 +9,12 @@ class rfidCard extends Model
 {
     use HasFactory;
 
-    protected $table = "rfidCards";
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = "RfidCards";
 
     /**
      * The attributes that are mass assignable.

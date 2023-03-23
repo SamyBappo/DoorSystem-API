@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        DB::table('users')->insert([
+        DB::table('Users')->insert([
             'name'=>'test',
             'email'=>'test@test.te',
             'password'=>Hash::make('testtest')
         ]);
 
-        DB::table('rfidCards')->insert([
+        DB::table('UfidCards')->insert([
             'uid'=>'B2 A8 3F 61',
             'accessLvl'=>1
         ]);

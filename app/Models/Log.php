@@ -9,5 +9,10 @@ class Log extends Model
 {
     use HasFactory;
 
-    protected $table='logs';
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table='Logs';
 }
