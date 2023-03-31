@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('Logs', function (Blueprint $table) {
             $table->id();
             $table->string('cardUid');
+            $table->string('doorId');
+            $table->boolean('accessGranted');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('Logs');
     }
 };
