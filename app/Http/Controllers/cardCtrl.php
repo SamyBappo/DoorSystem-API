@@ -49,6 +49,4 @@ class cardCtrl extends Controller
         $card->save();
         return 0;
     }
-
-
 }

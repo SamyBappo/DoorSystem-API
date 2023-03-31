@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'password'=>Hash::make('testtest')
         ]);
 
-        DB::table('UfidCards')->insert([
+        DB::table('RfidCards')->insert([
             'uid'=>'B2 A8 3F 61',
             'accessLvl'=>1
         ]);
