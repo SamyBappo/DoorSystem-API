@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\rfidCard;
+use Error;
 use Illuminate\Http\Request;
 use PhpMqtt\Client\Facades\MQTT;
 
@@ -25,7 +26,7 @@ class cardCtrl extends Controller
         //return rfidCard::all();
     }
 
-    public function check(Request $req){
+    public function checkOld(Request $req){
 
         $uid = $req->input('uid');
         $cards = rfidCard::all();
@@ -42,11 +43,32 @@ class cardCtrl extends Controller
     }
 
     public function add(Request $req){
+        try{ $req->validate([ 'uid'=>['required', 'string',  'min:3', 'max:100']]); }
+        catch(Error $err){return [false,'Fill all fields']; }
+
         $card = new rfidCard();
         $card->uid = $req->uid;
-        $card->accessLvl = $req->accessLvl;
-
         $card->save();
-        return 0;
+    }
+
+    public function update(Request $req){
+        try{ 
+            $req->validate([ 
+                'id'=>['required', 'string',  'min:3', 'max:100'],
+                'uid'=>['required', 'string',  'min:3', 'max:100']
+            ]); 
+        }
+        catch(Error $err){return [false,'Fill all fields']; }
+
+        $card = rfidCard::find($req->id);
+        $card->uid = $req->uid;
+        $card->save();
+    }
+
+    public function delete(Request $req){
+        try{ $req->validate([ 'id'=>['required', 'string',  'min:3', 'max:100']]); }
+        catch(Error $err){return [false,'Provide UID']; }
+        $card = rfidCard::find($req->id);
+        $card->delete();
     }
 }

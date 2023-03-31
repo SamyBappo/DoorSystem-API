@@ -18,11 +18,21 @@ use Illuminate\Support\Facades\Route;
 //user
 Route::post('user/auth', [userCtrl::class, 'authenticate']);
 Route::post('user/add', [userCtrl::class, 'add']);
+Route::post('user/update', [userCtrl::class, 'update']);
+Route::post('user/delete', [userCtrl::class, 'delete']);
 
 // cards
 Route::get('card/all', [cardCtrl::class, 'getall']);
 Route::post('card/check', [cardCtrl::class, 'check']);
 Route::post('card/add', [cardCtrl::class, 'add']);
+Route::post('card/update', [cardCtrl::class, 'update']);
+Route::post('card/delete', [cardCtrl::class, 'delete']);
+
+// doors
+Route::get('door/all', [doorCtrl::class, 'getall']);
+Route::post('door/add', [doorCtrl::class, 'add']);
+Route::post('door/update', [doorCtrl::class, 'update']);
+Route::post('door/delete', [doorCtrl::class, 'delete']);
 
 //Logs
 Route::get('log/week', [logCtrl::class, 'getPastWeek']);

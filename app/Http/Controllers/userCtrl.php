@@ -42,4 +42,27 @@ class userCtrl extends Controller
         $user->save();
         return true;
     }
+
+    public function update(Request $req){
+        try{
+            $req->validate([
+                'name'=>['required', 'string',  'min:3', 'max:100'],
+                'email'=>['required', 'string',  'min:3', 'max:100'],
+                'password'=> ['required', 'string',  'min:6', 'max:100']
+            ]);
+        }catch(Error $err){return [false,'Fill all fields']; }
+    
+        $user = User::find($req->id);
+        $user->name = $req->name;
+        $user->email=$req->email;
+        $user->password=Hash::make($req->password);
+        $user->save();
+        return true;
+    }
+
+    public function delete(Request $req){
+        $user = User::find($req->id);
+        $user->delete();
+        return true;
+    }
 }
