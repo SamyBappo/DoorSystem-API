@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class rfidCard extends Model
+class Access extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class rfidCard extends Model
      *
      * @var string
      */
-    protected $table = "RfidCards";
+    protected $table = 'Accesses';
 
     /**
      * The attributes that are mass assignable.
@@ -22,8 +22,7 @@ class rfidCard extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'uid',
-        'accessLvl',
+        'cardUid',
+        'doorId',
     ];
-
 }
