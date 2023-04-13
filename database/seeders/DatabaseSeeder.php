@@ -27,7 +27,23 @@ class DatabaseSeeder extends Seeder
 
         DB::table('RfidCards')->insert([
             'uid'=>'B2 A8 3F 61',
-            'accessLvl'=>1
+            'userId'=>1
+        ]);
+
+        DB::table('RfidCards')->insert([
+            'uid'=>'DC 33 75 32',
+            'userId'=>1
+        ]);
+
+        DB::table('Doors')->insert([
+            'name'=>'C-089',
+            'description'=>'Local a Alain',
+            'location'=>'C-089'
+        ]);
+
+        DB::table('Accesses')->insert([
+            'cardUid'=>'B2 A8 3F 61',
+            'doorId'=>1,
         ]);
     }
 }

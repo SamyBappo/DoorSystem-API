@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('RfidCards', function (Blueprint $table) {
-            $table->id();
+            $table->smallIncrements('id')->nullable(false);
             $table->string('uid');
+            $table->unsignedSmallInteger('userId')->nullable();
             $table->timestamps();
         });
     }

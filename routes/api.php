@@ -34,6 +34,11 @@ Route::post('door/add', [doorCtrl::class, 'add']);
 Route::post('door/update', [doorCtrl::class, 'update']);
 Route::post('door/delete', [doorCtrl::class, 'delete']);
 
+// Access
+Route::post('access/add', [accessCtrl::class, 'add']);
+Route::post('access/delete', [accessCtrl::class, 'delete']);
+Route::post('access/check', [accessCtrl::class, 'check']);
+
 //Logs
 Route::get('log/week', [logCtrl::class, 'getPastWeek']);
 Route::get('log/month', [logCtrl::class, 'getPastMonth']);

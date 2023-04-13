@@ -9,12 +9,6 @@ use PhpMqtt\Client\Facades\MQTT;
 
 class cardCtrl extends Controller
 {
-    public function mqttSub(){
-        $mqtt = MQTT::connection();
-        $mqtt->subscribe('/door/cardUID', function (string $topic, string $message) {
-            }, 1);
-        $mqtt->loop(true);
-    }
 
     public function getall(){
         return route('api/card/check',['uid'=>'po'], true);
@@ -22,8 +16,6 @@ class cardCtrl extends Controller
         $mqtt->subscribe('/door/cardUID', function (string $topic, string $message) {
                 return route('api/card/check',['uid'=>$message]);
             }, 1);
-        //$mqtt->loop(true);
-        //return rfidCard::all();
     }
 
     public function checkOld(Request $req){

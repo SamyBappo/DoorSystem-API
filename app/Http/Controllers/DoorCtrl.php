@@ -35,7 +35,6 @@ class DoorCtrl extends Controller
             ]);
         } catch (Error $err) { return [false, 'Fill all fields']; }
 
-        
         $door = Door::find($req->id);
         $door->name = $req->name;
         $door->description = $req->description;
