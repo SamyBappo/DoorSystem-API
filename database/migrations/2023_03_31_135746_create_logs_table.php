@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('Logs', function (Blueprint $table) {
-            $table->id();
-            $table->string('cardUid');
-            $table->string('doorId');
+            $table->smallIncrements('id')->nullable(false);
+            $table->unsignedSmallInteger('cardId');
+            $table->unsignedSmallInteger('doorId');
             $table->boolean('accessGranted');
             $table->timestamps();
         });

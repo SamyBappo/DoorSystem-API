@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
-class logCtrl extends Controller
+class LogCtrl extends Controller
 {
-    public function add($cardUid){
-        $log = new Log();
-        $log->cardUid=$cardUid;
-        $log->save();
+    public function add(Request $req){
+        try{
+            $req->validate([
+                'cardUid' => ['required', 'string', 'min:3', 'max:100'],
+                'doorId' => ['required', 'string', 'min:3', 'max:100'],
+            ]);
+        }catch(ValidationException $err){return $err->getMessage(); }
+        
+        Log::create([
+                'cardUid' => $req->cardUid,
+                'doorId' => $req->doorId
+            ]);
     }
 
     public function getAll(){ return Log::all(); }

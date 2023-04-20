@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('Doors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('description');
+            $table->smallIncrements('id')->nullable(false);
+            $table->string('name')->unique();
             $table->string('location');
+            $table->string('description');
             $table->timestamps();
         });
     }

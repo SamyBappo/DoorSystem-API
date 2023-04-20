@@ -9,21 +9,12 @@ class Door extends Model
 {
     use HasFactory;
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
     protected $table = 'Doors';
+    protected $hidden = ['id'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
-        'description',
         'location',
+        'description',
     ];
 }
