@@ -22,7 +22,7 @@ class Access extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'cardUid',
+        'cardId',
         'doorId',
     ];
 }

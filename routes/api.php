@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\cardCtrl;
-use App\Http\Controllers\userCtrl;
+use App\Http\Controllers\AccessCtrl;
+use App\Http\Controllers\CardCtrl;
+use App\Http\Controllers\DoorCtrl;
+use App\Http\Controllers\LogCtrl;
+use App\Http\Controllers\UserCtrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,32 +19,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //user
-Route::post('user/auth', [userCtrl::class, 'authenticate']);
-Route::post('user/add', [userCtrl::class, 'add']);
-Route::post('user/update', [userCtrl::class, 'update']);
-Route::post('user/delete', [userCtrl::class, 'delete']);
+Route::post('user/auth', [UserCtrl::class, 'authenticate']);
+Route::post('user/add', [UserCtrl::class, 'add']);
+Route::post('user/update', [UserCtrl::class, 'update']);
+Route::post('user/delete', [UserCtrl::class, 'delete']);
 
 // cards
-Route::get('card/all', [cardCtrl::class, 'getall']);
-Route::post('card/check', [cardCtrl::class, 'check']);
-Route::post('card/add', [cardCtrl::class, 'add']);
-Route::post('card/update', [cardCtrl::class, 'update']);
-Route::post('card/delete', [cardCtrl::class, 'delete']);
+Route::post('card/all', [CardCtrl::class, 'getall']);
+Route::post('card/add', [CardCtrl::class, 'add']);
+Route::post('card/update', [CardCtrl::class, 'update']);
+Route::post('card/delete', [CardCtrl::class, 'delete']);
+Route::post('card/check', [CardCtrl::class, 'check']);
 
 // doors
-Route::get('door/all', [doorCtrl::class, 'getall']);
-Route::post('door/add', [doorCtrl::class, 'add']);
-Route::post('door/update', [doorCtrl::class, 'update']);
-Route::post('door/delete', [doorCtrl::class, 'delete']);
+Route::get('door/all', [DoorCtrl::class, 'getall']);
+Route::post('door/add', [DoorCtrl::class, 'add']);
+Route::post('door/update', [DoorCtrl::class, 'update']);
+Route::post('door/delete', [DoorCtrl::class, 'delete']);
 
 // Access
-Route::post('access/add', [accessCtrl::class, 'add']);
-Route::post('access/delete', [accessCtrl::class, 'delete']);
-Route::post('access/check', [accessCtrl::class, 'check']);
+Route::post('access/add', [AccessCtrl::class, 'add']);
+Route::post('access/delete', [AccessCtrl::class, 'delete']);
+Route::post('access/check', [AccessCtrl::class, 'check']);
 
 //Logs
-Route::get('log/week', [logCtrl::class, 'getPastWeek']);
-Route::get('log/month', [logCtrl::class, 'getPastMonth']);
-Route::get('log/year', [logCtrl::class, 'getPastYear']);
-Route::get('log/all', [logCtrl::class, 'getAll']);
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) { return $request->user();});
+Route::get('log/week', [LogCtrl::class, 'getPastWeek']);
+Route::get('log/month', [LogCtrl::class, 'getPastMonth']);
+Route::get('log/year', [LogCtrl::class, 'getPastYear']);
+Route::get('log/all', [LogCtrl::class, 'getAll']);

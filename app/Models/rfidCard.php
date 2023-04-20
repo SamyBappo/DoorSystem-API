@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class rfidCard extends Model
+class RfidCard extends Model
 {
     use HasFactory;
 
@@ -22,8 +22,7 @@ class rfidCard extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'uid',
-        'accessLvl',
+        'uid'
     ];
 
 }

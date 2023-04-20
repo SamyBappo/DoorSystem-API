@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('RfidCards', function (Blueprint $table) {
             $table->smallIncrements('id')->nullable(false);
-            $table->string('uid');
+            $table->string('uid')->unique();
             $table->unsignedSmallInteger('userId')->nullable();
             $table->timestamps();
         });

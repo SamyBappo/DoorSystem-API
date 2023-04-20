@@ -6,8 +6,9 @@ use App\Models\User;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
-class userCtrl extends Controller
+class UserCtrl extends Controller
 {
     public function authenticate(Request $req){
         try{
@@ -15,7 +16,7 @@ class userCtrl extends Controller
             'email'=>['required', 'string',  'min:3', 'max:100'],
             'password'=> ['required', 'string',  'min:6', 'max:100']
         ]);
-        }catch(Error $err){return [false,'Fill all fields']; }
+        }catch(ValidationException $err){return $err->getMessage(); }
 
         $user = User::firstwhere('email', $req->email);
 
@@ -33,14 +34,13 @@ class userCtrl extends Controller
                 'email'=>['required', 'string',  'min:3', 'max:100'],
                 'password'=> ['required', 'string',  'min:6', 'max:100']
             ]);
-        }catch(Error $err){return [false,'Fill all fields']; }
+        }catch(ValidationException $err){return $err->getMessage(); }
     
-        $user = new User();
-        $user->name = $req->name;
-        $user->email=$req->email;
-        $user->password=Hash::make($req->password);
-        $user->save();
-        return true;
+        User::create([
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password)
+        ]);
     }
 
     public function update(Request $req){
@@ -50,7 +50,7 @@ class userCtrl extends Controller
                 'email'=>['required', 'string',  'min:3', 'max:100'],
                 'password'=> ['required', 'string',  'min:6', 'max:100']
             ]);
-        }catch(Error $err){return [false,'Fill all fields']; }
+        }catch(ValidationException $err){return $err->getMessage(); }
     
         $user = User::find($req->id);
         $user->name = $req->name;
