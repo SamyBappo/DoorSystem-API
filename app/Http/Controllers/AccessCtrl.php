@@ -35,11 +35,14 @@ class AccessCtrl extends Controller
         try {
             $req->validate([
                 'cardUid' => ['required', 'string', 'min:3', 'max:100'],
-                'doorId' => ['required', 'string', 'min:3', 'max:100'],
+                'doorName' => ['required', 'string', 'min:3', 'max:100'],
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
 
-        $access = Access::where('cardUid', $req->cardUid)->where('doorId', $req->doorId)->first();
+        $card = RfidCard::where('uid', $req->cardUid)->first();
+        $door = Door::where('name', $req->doorName)->first();
+
+        $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
         $access->delete();
     }
 
@@ -48,16 +51,27 @@ class AccessCtrl extends Controller
         try {
             $req->validate([
                 'cardUid' => ['required', 'string', 'min:3', 'max:100'],
-                'doorId' => ['required', 'string', 'min:3', 'max:100'],
+                'doorName' => ['required', 'string', 'min:3', 'max:100'],
             ]);
-        } catch(ValidationException $err){return $err->getMessage(); }
+        }catch(ValidationException $err){return $err->getMessage(); }
 
-        $access = Access::where('cardUid', $req->cardUid)->where('doorId', $req->doorId)->first();
-        if (!$access) return false;
+        $card = RfidCard::where('uid', $req->cardUid)->first();
+        $door = Door::where('name', $req->doorName)->first();
+        $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
+
+        if (!$access){
+            Log::create([
+                'cardId' => $card->id,
+                'doorId' => $door->id,
+                'accessGranted' => false,
+            ]);
+            return false;
+        }
+
         Log::create([
-            'cardUid' => $req->cardUid,
-            'doorId' => $req->doorId,
-            'status' => 'success'
+            'cardId' => $card->id,
+            'doorId' => $door->id,
+            'accessGranted' => true,
         ]);
         return true;
     }
