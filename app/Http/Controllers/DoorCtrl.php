@@ -9,6 +9,8 @@ use Illuminate\Validation\ValidationException;
 
 class DoorCtrl extends Controller
 {
+    public function getall(){ return Door::all();}
+    
     public function add(Request $req)
     {
         try {
@@ -49,5 +51,4 @@ class DoorCtrl extends Controller
         $door->delete();
     }
 
-    public function getall(){ return Door::all();}
 }
