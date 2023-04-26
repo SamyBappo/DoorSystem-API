@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('Accesses')->insert([
             'cardUid'=>'B2 A8 3F 61',
-            'doorId'=>1,
+            'doorName'=>'C-089',
         ]);
     }
 }

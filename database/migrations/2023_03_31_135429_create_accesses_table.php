@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('Accesses', function (Blueprint $table) {
             $table->smallIncrements('id')->nullable(false);
-            $table->unsignedSmallInteger('cardUid');
-            $table->unsignedSmallInteger('doorName');
+            $table->string('cardUid');
+            $table->string('doorName');
             $table->timestamps();
         });
     }
