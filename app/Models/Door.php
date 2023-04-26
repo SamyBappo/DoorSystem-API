@@ -15,6 +15,6 @@ class Door extends Model
     protected $fillable = [
         'name',
         'location',
-        'description',
+        'description'
     ];
 }

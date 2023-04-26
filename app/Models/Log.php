@@ -11,4 +11,10 @@ class Log extends Model
 
     protected $table='Logs';
     protected $hidden = ['id'];
+
+    protected $fillable = [
+        'cardId',
+        'doorId',
+        'accessGranted'
+    ];
 }

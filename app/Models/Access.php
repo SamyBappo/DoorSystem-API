@@ -14,6 +14,6 @@ class Access extends Model
 
     protected $fillable = [
         'cardId',
-        'doorId',
+        'doorId'
     ];
 }
