@@ -13,7 +13,7 @@ class Access extends Model
     protected $hidden = ['id'];
 
     protected $fillable = [
-        'cardUid',
-        'doorName',
+        'cardId',
+        'doorId',
     ];
 }
