@@ -21,6 +21,10 @@ class DoorCtrl extends Controller
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
 
+        if(Door::where('name',$req->name)->first() != null){
+            return ("Door already exists!");
+        }
+
         Door::create([
             'name' => $req->name,
             'location' => $req->location,
@@ -38,8 +42,7 @@ class DoorCtrl extends Controller
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
 
-        $door = Door::find($req->id);
-        $door->name = $req->name;
+        $door = Door::where('name',$req->name)->first();
         $door->description = $req->description;
         $door->location = $req->location;
         $door->save();
@@ -47,7 +50,12 @@ class DoorCtrl extends Controller
 
     public function delete(Request $req)
     {
-        $door = Door::find($req->id);
+        try {
+            $req->validate([
+                'name' => ['required', 'string', 'min:3', 'max:100']
+            ]);
+        }catch(ValidationException $err){return $err->getMessage(); }
+        $door = Door::where('name',$req->name)->first();
         $door->delete();
     }
 

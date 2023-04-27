@@ -18,26 +18,30 @@ class CardCtrl extends Controller
         try{ $req->validate([ 'uid'=>['required', 'string',  'min:3', 'max:100']]); }
         catch(ValidationException $err){return $err->getMessage(); }
 
+        if($card = RfidCard::where('uid',$req->uid)->first() != null){
+            return ("Card exists already!");
+        }
+
         RfidCard::create(['uid'=>$req->uid]);
     }
 
     public function update(Request $req){
         try{ 
             $req->validate([ 
-                'id'=>['required', 'string',  'min:3', 'max:100'],
-                'uid'=>['required', 'string',  'min:3', 'max:100']
+                'oldUid'=>['required', 'string',  'min:8', 'max:24'],
+                'newUid'=>['required', 'string',  'min:8', 'max:24']
             ]); 
         }catch(ValidationException $err){return $err->getMessage(); }
 
-        $card = RfidCard::find($req->id);
-        $card->uid = $req->uid;
+        $card = RfidCard::where('uid',$req->oldUid)->first();
+        $card->uid = $req->newUid;
         $card->save();
     }
 
     public function delete(Request $req){
-        try{ $req->validate([ 'id'=>['required', 'string',  'min:3', 'max:100']]); }
+        try{ $req->validate([ 'uid'=>['required', 'string',  'min:3', 'max:100']]); }
         catch(ValidationException $err){return $err->getMessage(); }
-        $card = RfidCard::find($req->id);
+        $card = RfidCard::where('uid',$req->uid)->first();
         $card->delete();
     }
 
