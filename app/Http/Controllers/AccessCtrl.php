@@ -9,6 +9,7 @@ use App\Models\RfidCard;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use PhpMqtt\Client\Facades\MQTT;
 
 class AccessCtrl extends Controller
 {
@@ -76,6 +77,7 @@ class AccessCtrl extends Controller
             return 0;
         }
 
+        MQTT::connection()->publish('/DoorSystem/access','go');
         Log::create([
             'cardId' => $card->id,
             'doorId' => $door->id,

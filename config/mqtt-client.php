@@ -33,7 +33,7 @@ return [
     'connections' => [
         
         'public' => [
-            'host' => '172.16.5.101',
+            'host' => '137.184.168.254',
             'port' => 1883,
         ],
         'default00' => [

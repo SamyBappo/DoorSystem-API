@@ -1,66 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+API for DoorSystem
+Uses PHP7.4 and MariaDB
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Prerequisites:
 
-## About Laravel
+Apache2
+  libapache2-mod-php
+PHP:
+  PHP7.4
+  php-bcmath
+  php-cli
+  php-curl
+  php-common
+  php-gd
+  php-json
+  php-mbstring
+  php-mysql
+  php-tokenizer
+  php-xml
+  php-zip
+composer
+MariaDB-server (or mysql, not prefered)
+___________________________________________________________________________________________________
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Installation : (french follows english)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+One-shot apt install:
+doas apt install apache2 libapache2-mod-php php7.4-{bcmath,cli,curl,common,gd,json,mbstring,mysql,tokenizer,xml,zip} composer mariadb-server
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Create database DoorSystem; // run in MariaDB, case sensitive!!
 
-## Learning Laravel
+On a GNU/Linux serveur (debian based) (using doas, you probably have sudo!)
+dans le root du projet entrer les commandes:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+doas composer install --no-dev
+doas cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Update .env with all needed info:database name, username and password.
+Make sure the selected user has sufficent access to the database (create, update, delete)
+grant all privileges on DoorSystem.* to 'user'@'localhost';
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+doas chown www-data:www-data {absolute route to the projet} // www-data is the Apache2 default user.
+doas chmod 775 {absolute route to the projet}
 
-## Laravel Sponsors
+doas php artisan migrate // create tables in db
+doas php artisan key:generate // generate encription key
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Edit (if needed) config file DoorSystemAPI.conf (included in config/)
+Specify absolute path to the public/ directory in both DocumentRoot and Directory
+ServerName et ServerAlias if needed.
 
-### Premium Partners
+copy le file DoorSystemAPI.conf to /etc/apache2/sites-available/
+doas cp config/DoorSystemAPI.conf /etc/apache2/sites-available/
+doas a2ensite DoorSystemAPI.conf
+doas systemctl restart apache2
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Server is now up and running
 
-## Contributing
+___________________________________________________________________________________________________
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+One-shot apt install:
+doas apt install apache2 libapache2-mod-php php7.4-{bcmath,cli,curl,common,gd,json,mbstring,mysql,tokenizer,xml,zip} composer mariadb-server
 
-## Code of Conduct
+Creer la base de donnees DoorSystem; // run in MariaDB, case sensitive!!
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+On a GNU/Linux serveur (debian based) (j'utilise doas, vous avez probablement sudo!)
+dans le root du projet entrer les commandes:
 
-## Security Vulnerabilities
+doas composer install --no-dev
+doas cp .env.example .env
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Modifier le ficher .env avec le nom de la bd (si c'est pas CarnetSante), le nom du user et le mot de passe.
+S'assurer que ce user a touts les access sur la bd
+grant all privileges on CarnetSante.* to 'labelo'@'localhost';
 
-## License
+doas chown www-data:www-data {route absolue vers le projet} // www-data est le user qui permet a Apache2 d'avoir acces, il est cree lors de l'installation de Apache2
+doas chmod 775 {route absolue vers le projet}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+doas php artisan migrate //pour creer les tables dans la bd
+doas php artisan key:generate //pour generer une cle d'encription
+
+Modifier le fichier carnetSanteAPI.conf (inclu dans le dossier config) 
+Specifier le path absolu vers le dossier public/ du projet dans DocumentRoot et Directory
+ServerName et ServerAlias s'ils sont incorrectes.
+
+copier le fichier carnetSanteAPI.conf vers /etc/apache2/sites-available/
+doas cp config/carnetSanteAPI.conf /etc/apache2/sites-available/
+doas a2ensite carnetSanteAPI.conf
+doas systemctl restart apache2
+
+le serveur est maintenant operationnel
