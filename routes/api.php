@@ -32,7 +32,7 @@ Route::post('card/delete', [CardCtrl::class, 'delete']);
 Route::post('card/check', [CardCtrl::class, 'check']);
 
 // doors
-Route::get('door/all', [DoorCtrl::class, 'getall']);
+Route::post('door/all', [DoorCtrl::class, 'getall']);
 Route::post('door/add', [DoorCtrl::class, 'add']);
 Route::post('door/update', [DoorCtrl::class, 'update']);
 Route::post('door/delete', [DoorCtrl::class, 'delete']);
@@ -41,9 +41,10 @@ Route::post('door/delete', [DoorCtrl::class, 'delete']);
 Route::post('access/add', [AccessCtrl::class, 'add']);
 Route::post('access/delete', [AccessCtrl::class, 'delete']);
 Route::post('access/check', [AccessCtrl::class, 'check']);
+Route::post('access/all', [AccessCtrl::class, 'getall']);
 
 //Logs
-Route::get('log/week', [LogCtrl::class, 'getPastWeek']);
-Route::get('log/month', [LogCtrl::class, 'getPastMonth']);
-Route::get('log/year', [LogCtrl::class, 'getPastYear']);
-Route::get('log/all', [LogCtrl::class, 'getAll']);
+Route::post('log/week', [LogCtrl::class, 'getPastWeek']);
+Route::post('log/month', [LogCtrl::class, 'getPastMonth']);
+Route::post('log/year', [LogCtrl::class, 'getPastYear']);
+Route::post('log/all', [LogCtrl::class, 'getAll']);

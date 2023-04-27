@@ -36,6 +36,10 @@ class UserCtrl extends Controller
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
     
+        if(User::where('email',$req->email)->first() != null){
+            return ("Email already in use!");
+        }
+
         User::create([
             'name' => $req->name,
             'email' => $req->email,
@@ -52,7 +56,7 @@ class UserCtrl extends Controller
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
     
-        $user = User::find($req->id);
+        $user = User::where('email',$req->email)->first();
         $user->name = $req->name;
         $user->email=$req->email;
         $user->password=Hash::make($req->password);

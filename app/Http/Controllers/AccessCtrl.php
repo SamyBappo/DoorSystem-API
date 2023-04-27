@@ -24,6 +24,14 @@ class AccessCtrl extends Controller
         $card = RfidCard::where('uid', $req->cardUid)->first();
         $door = Door::where('name', $req->doorName)->first();
 
+        if($card==null or $door==null){
+            return ("card or door unknown");
+        }
+
+        if(Access::where('cardId', $card->id)->where('doorId', $door->id)->first() != null){
+            return ("Access exists already!");
+        }
+
         Access::create([
             'cardId' => $card->id,
             'doorId' => $door->id,
@@ -59,13 +67,13 @@ class AccessCtrl extends Controller
         $door = Door::where('name', $req->doorName)->first();
         $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
 
-        if (!$access){
+        if ($access==null){
             Log::create([
                 'cardId' => $card->id,
                 'doorId' => $door->id,
                 'accessGranted' => false,
             ]);
-            return false;
+            return 0;
         }
 
         Log::create([
@@ -73,6 +81,10 @@ class AccessCtrl extends Controller
             'doorId' => $door->id,
             'accessGranted' => true,
         ]);
-        return true;
+        return 1;
+    }
+
+    public function getAll(){
+        return Access::all();
     }
 }
