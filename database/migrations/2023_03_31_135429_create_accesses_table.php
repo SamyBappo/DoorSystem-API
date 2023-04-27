@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('RfidCards', function (Blueprint $table) {
+        Schema::create('Accesses', function (Blueprint $table) {
             $table->smallIncrements('id')->nullable(false);
-            $table->string('uid')->unique();
-            $table->unsignedSmallInteger('userId')->nullable();
+            $table->unsignedSmallInteger('cardId');
+            $table->unsignedSmallInteger('doorId');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Rfid_cards');
+        Schema::dropIfExists('Accesses');
     }
 };
