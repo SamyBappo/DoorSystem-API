@@ -30,6 +30,7 @@ class DoorCtrl extends Controller
             'location' => $req->location,
             'description' => $req->description,
         ]);
+        return ("Success!");
     }
 
     public function update(Request $req)
@@ -43,9 +44,11 @@ class DoorCtrl extends Controller
         }catch(ValidationException $err){return $err->getMessage(); }
 
         $door = Door::where('name',$req->name)->first();
+        if($door == null){return ("Door not found!");}
         $door->description = $req->description;
         $door->location = $req->location;
         $door->save();
+        return ("Success!");
     }
 
     public function delete(Request $req)
@@ -56,7 +59,9 @@ class DoorCtrl extends Controller
             ]);
         }catch(ValidationException $err){return $err->getMessage(); }
         $door = Door::where('name',$req->name)->first();
+        if($door == null){return ("Door not found!");}
         $door->delete();
+        return ("Success!");
     }
 
 }

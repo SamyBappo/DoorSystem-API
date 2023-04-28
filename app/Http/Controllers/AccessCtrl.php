@@ -37,6 +37,7 @@ class AccessCtrl extends Controller
             'cardId' => $card->id,
             'doorId' => $door->id,
         ]);
+        return("Success!");
     }
 
     public function delete(Request $req)
@@ -50,9 +51,12 @@ class AccessCtrl extends Controller
 
         $card = RfidCard::where('uid', $req->cardUid)->first();
         $door = Door::where('name', $req->doorName)->first();
+        if($card==null or $door==null){return ("Access not found!");}
 
         $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
+        if($access == null){return ("Access not found!");}
         $access->delete();
+        return("Success!");
     }
 
     public function check(Request $req)
@@ -66,6 +70,7 @@ class AccessCtrl extends Controller
 
         $card = RfidCard::where('uid', $req->cardUid)->first();
         $door = Door::where('name', $req->doorName)->first();
+        if($card==null or $door==null){return ("Access not found!");}
         $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
 
         if ($access==null){
