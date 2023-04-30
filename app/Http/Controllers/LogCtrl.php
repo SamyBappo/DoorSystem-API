@@ -24,7 +24,7 @@ class LogCtrl extends Controller
 
     public function getAll(){
         return Log::join('Doors', 'Logs.doorId', '=', 'Doors.id')
-            ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.uid')
+            ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.id')
             ->select('Doors.name as doorName', 'RfidCards.uid as cardUid', 'Logs.created_at as time', 'Logs.accessGranted')
             ->get();
     }
