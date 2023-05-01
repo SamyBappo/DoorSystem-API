@@ -57,6 +57,9 @@ class UserCtrl extends Controller
         }catch(ValidationException $err){return $err->getMessage(); }
     
         $user = User::where('email',$req->email)->first();
+
+        if($user == null){ return false;}
+
         $user->name = $req->name;
         $user->email=$req->email;
         $user->password=Hash::make($req->password);
@@ -65,7 +68,8 @@ class UserCtrl extends Controller
     }
 
     public function delete(Request $req){
-        $user = User::find($req->id);
+        $user = User::where('email',$req->email)->first();
+        if($user == null){ return false;}
         $user->delete();
         return true;
     }

@@ -9,6 +9,8 @@ use App\Models\RfidCard;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use PhpMqtt\Client\Facades\MQTT;
+use PhpMqtt\Client\MqttClient;
 
 class AccessCtrl extends Controller
 {
@@ -36,6 +38,7 @@ class AccessCtrl extends Controller
             'cardId' => $card->id,
             'doorId' => $door->id,
         ]);
+        return("Success!");
     }
 
     public function delete(Request $req)
@@ -49,9 +52,12 @@ class AccessCtrl extends Controller
 
         $card = RfidCard::where('uid', $req->cardUid)->first();
         $door = Door::where('name', $req->doorName)->first();
+        if($card==null or $door==null){return ("Access not found!");}
 
         $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
+        if($access == null){return ("Access not found!");}
         $access->delete();
+        return("Success!");
     }
 
     public function check(Request $req)
@@ -65,6 +71,7 @@ class AccessCtrl extends Controller
 
         $card = RfidCard::where('uid', $req->cardUid)->first();
         $door = Door::where('name', $req->doorName)->first();
+        if($card==null or $door==null){return ("Access not found!");}
         $access = Access::where('cardId', $card->id)->where('doorId', $door->id)->first();
 
         if ($access==null){
@@ -76,6 +83,13 @@ class AccessCtrl extends Controller
             return 0;
         }
 
+        $mqtt = new MqttClient(env('MQTT_HOST'), env('MQTT_PORT'));
+        
+        //MQTT::setCredentials(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
+        //$mqtt->setAuthentication(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
+        $mqtt->connect();
+
+        $mqtt->publish('DoorSystem/door/open', $door->name);
         Log::create([
             'cardId' => $card->id,
             'doorId' => $door->id,

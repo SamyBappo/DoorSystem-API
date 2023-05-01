@@ -21,8 +21,8 @@ class CardCtrl extends Controller
         if($card = RfidCard::where('uid',$req->uid)->first() != null){
             return ("Card exists already!");
         }
-
         RfidCard::create(['uid'=>$req->uid]);
+        return ("Success!");
     }
 
     public function update(Request $req){
@@ -34,15 +34,19 @@ class CardCtrl extends Controller
         }catch(ValidationException $err){return $err->getMessage(); }
 
         $card = RfidCard::where('uid',$req->oldUid)->first();
+        if($card == null){return ("Card not found!");}
         $card->uid = $req->newUid;
         $card->save();
+        return ("Success!");
     }
 
     public function delete(Request $req){
         try{ $req->validate([ 'uid'=>['required', 'string',  'min:3', 'max:100']]); }
         catch(ValidationException $err){return $err->getMessage(); }
         $card = RfidCard::where('uid',$req->uid)->first();
+        if($card == null){return ("Card not found!");}
         $card->delete();
+        return ("Success!");
     }
 
     // public function checkOld(Request $req){
