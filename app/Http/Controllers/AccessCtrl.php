@@ -82,7 +82,9 @@ class AccessCtrl extends Controller
             return 0;
         }
 
-        MQTT::connection()->publish('/DoorSystem/access','go');
+	MQTT::connection()
+    	->setAuth(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
+        MQTT::connection()->publish('/DoorSystem/door/open', $door->name);
         Log::create([
             'cardId' => $card->id,
             'doorId' => $door->id,
