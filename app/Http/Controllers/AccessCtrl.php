@@ -10,6 +10,7 @@ use Error;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use PhpMqtt\Client\Facades\MQTT;
+use PhpMqtt\Client\MqttClient;
 
 class AccessCtrl extends Controller
 {
@@ -82,9 +83,13 @@ class AccessCtrl extends Controller
             return 0;
         }
 
-	MQTT::connection()
-    	->setAuth(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
-        MQTT::connection()->publish('/DoorSystem/door/open', $door->name);
+        $mqtt = new MqttClient(env('MQTT_HOST'), env('MQTT_PORT'));
+        
+        //MQTT::setCredentials(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
+        //$mqtt->setAuthentication(env('MQTT_USERNAME'), env('MQTT_PASSWORD'));
+        $mqtt->connect();
+
+        $mqtt->publish('DoorSystem/door/open', $door->name);
         Log::create([
             'cardId' => $card->id,
             'doorId' => $door->id,

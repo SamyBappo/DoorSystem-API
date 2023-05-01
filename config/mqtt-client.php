@@ -33,10 +33,10 @@ return [
     'connections' => [
         
         'public' => [
-            'host' => env('MQTT_HOST'),
+            'host' => env('MQTT_HOST', '137.184.168.254'),
             'port' => 1883,
-            'username' => env('MQTT_USERNAME'),
-            'password' => env('MQTT_PASSWORD'),
+            'username' => env('MQTT_USERNAME', 'user'),
+            'password' => env('MQTT_PASSWORD', 'Patate123'),
         ],
         'default00' => [
 
