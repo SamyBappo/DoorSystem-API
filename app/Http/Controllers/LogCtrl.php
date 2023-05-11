@@ -26,6 +26,7 @@ class LogCtrl extends Controller
         return Log::join('Doors', 'Logs.doorId', '=', 'Doors.id')
             ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.id')
             ->select('Doors.name as doorName', 'RfidCards.uid as cardUid', 'Logs.created_at as time', 'Logs.accessGranted')
+            ->orderBy('time','desc')
             ->get();
     }
 
@@ -33,7 +34,8 @@ class LogCtrl extends Controller
         return Log::join('Doors', 'Logs.doorId', '=', 'Doors.id')
             ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.uid')
             ->select('Doors.name as doorName', 'RfidCards.uid as cardUid', 'Logs.created_at as time', 'Logs.accessGranted')
-            ->where('logs.created_at', '>=', now()->subWeek())
+            ->where('Logs.created_at', '>=', now()->subWeek())
+            ->orderBy('time','desc')
             ->get();
     }
 
@@ -41,7 +43,8 @@ class LogCtrl extends Controller
         return Log::join('Doors', 'Logs.doorId', '=', 'Doors.id')
             ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.uid')
             ->select('Doors.name as doorName', 'RfidCards.uid as cardUid', 'Logs.created_at as time', 'Logs.accessGranted')
-            ->where('logs.created_at', '>=', now()->subMonth())
+            ->where('Logs.created_at', '>=', now()->subMonth())
+            ->orderBy('time','desc')
             ->get();
     }
 
@@ -49,7 +52,8 @@ class LogCtrl extends Controller
         return Log::join('Doors', 'Logs.doorId', '=', 'Doors.id')
             ->join('RfidCards', 'Logs.cardId', '=', 'RfidCards.uid')
             ->select('Doors.name as doorName', 'RfidCards.uid as cardUid', 'Logs.created_at as time', 'Logs.accessGranted')
-            ->where('logs.created_at', '>=', now()->subYear())
+            ->where('Logs.created_at', '>=', now()->subYear())
+            ->orderBy('time','desc')
             ->get();
     }
 }
